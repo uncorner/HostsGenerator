@@ -1,7 +1,20 @@
-﻿@{
+﻿@using HostsGenerator.Application.Entities;
+@model IEnumerable<HostItem>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <h1>This is Index page</h1>
 <p>Some text there</p>
 <p>Some text there 2</p>
+
+<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Add url host</a>
+
+<ul>
+    @foreach (var hostItem in Model)
+    {
+        <li>@hostItem.Url</li>
+    }
+</ul>
+

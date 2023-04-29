@@ -1,4 +1,5 @@
-﻿using HostsGenerator.Models;
+﻿using HostsGenerator.Application.Entities;
+using HostsGenerator.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,7 +16,15 @@ namespace HostsGenerator.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            HostItem[] hosts = new[] { 
+                new HostItem("host url 111"),
+                new HostItem("host url 222"),
+                new HostItem("host url 333"),
+                new HostItem("host url 444"),
+                new HostItem("host url 555")
+            };
+
+            return View(hosts);
         }
 
         public IActionResult Privacy()
