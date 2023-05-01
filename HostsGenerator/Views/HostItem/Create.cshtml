@@ -1,4 +1,4 @@
-﻿
+﻿@model HostItemForm
 @{
     ViewData["Title"] = "Добавление нового хоста";
 }
@@ -8,12 +8,14 @@
 <form method="post">
     <div>
         <p>
-            <label for="name">Название</label><br />
-            <input type="text" id="name" name="name" />
+            <label asp-for="Name">Название</label><br />
+            <input type="text" asp-for="Name" />
+            <span asp-validation-for="Name" />
         </p>
         <p>
-            <label for="url">Адрес url</label><br />
-            <input type="url" id="url" name="url" />
+            <label asp-for="Url">Адрес url</label><br />
+            <input type="text" asp-for="Url" />
+            <span asp-validation-for="Url" />
         </p>
         <p>
             <input type="submit" value="Добавить" />
@@ -21,3 +23,6 @@
     </div>
 </form>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

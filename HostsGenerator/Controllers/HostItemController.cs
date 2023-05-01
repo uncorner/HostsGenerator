@@ -19,19 +19,13 @@ namespace HostsGenerator.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var s = "Model is valid";
-                //return Content(s);
-
                 var hostItem = new HostItem(form.Url) { Name = form.Name };
                 Repository.HostItems.Add(hostItem);
 
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                return Content("Model is not valid");
-            }
             
+            return Content("Model is not valid");
         }
 
         
