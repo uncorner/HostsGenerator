@@ -1,4 +1,5 @@
 ﻿using HostsGenerator.Application.Entities;
+using HostsGenerator.Infrastructure;
 using HostsGenerator.Presenation.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -17,15 +18,7 @@ namespace HostsGenerator.Controllers
 
         public IActionResult Index()
         {
-            HostItem[] hosts = new[] { 
-                new HostItem("host url 111"),
-                new HostItem("host url 222"),
-                new HostItem("host url 333"),
-                new HostItem("host url 444"),
-                new HostItem("host url 555")
-            };
-
-            return View(hosts);
+            return View(Repository.HostItems);
         }
 
         public IActionResult Privacy()

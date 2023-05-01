@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Добавление нового хоста";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post">
+    <div>
+        <p>
+            <label for="name">Название</label><br />
+            <input type="text" id="name" name="name" />
+        </p>
+        <p>
+            <label for="url">Адрес url</label><br />
+            <input type="url" id="url" name="url" />
+        </p>
+        <p>
+            <input type="submit" value="Добавить" />
+        </p>
+    </div>
+</form>
+
