@@ -1,4 +1,4 @@
-namespace HostsGenerator.Models
+namespace HostsGenerator.Presenation.Models
 {
     public class ErrorViewModel
     {

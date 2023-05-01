@@ -1,6 +1,6 @@
 ﻿namespace HostsGenerator.Application.Entities
 {
-    internal class HostItem
+    public class HostItem
     {
         public string Url { get; init; }
         public string? Name { get; init; }

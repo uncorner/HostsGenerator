@@ -1,6 +1,7 @@
 ﻿using HostsGenerator.Application.Entities;
-using HostsGenerator.Models;
+using HostsGenerator.Presenation.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Diagnostics;
 
 namespace HostsGenerator.Controllers
