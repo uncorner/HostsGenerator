@@ -18,6 +18,11 @@
             <span asp-validation-for="Url" />
         </p>
         <p>
+            <label asp-for="IsEnabled">Включен</label><br />
+            <input type="checkbox" asp-for="IsEnabled" />
+            <span asp-validation-for="IsEnabled" />
+        </p>
+        <p>
             <input type="submit" value="Добавить" />
         </p>
     </div>

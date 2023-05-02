@@ -10,7 +10,7 @@ namespace HostsGenerator.Controllers
         
         public ActionResult Create()
         {
-            return View();
+            return View(new HostItemForm());
         }
 
         [HttpPost]
@@ -24,8 +24,9 @@ namespace HostsGenerator.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            
-            return Content("Model is not valid");
+
+            //return Content("Model is not valid");
+            return View(form);
         }
 
         
