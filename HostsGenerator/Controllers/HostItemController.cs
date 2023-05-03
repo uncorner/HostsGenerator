@@ -8,14 +8,14 @@ namespace HostsGenerator.Controllers
     public class HostItemController : Controller
     {
         
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View(new HostItemForm());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HostItemForm form)
+        public IActionResult Create(HostItemForm form)
         {
             if (ModelState.IsValid)
             {
@@ -25,8 +25,17 @@ namespace HostsGenerator.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            //return Content("Model is not valid");
             return View(form);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult CheckUrlExists(string url)
+        {
+            if (Repository.HostItems.Select(i => i.Url).Contains(url))
+            {
+                return Json(false);
+            }
+            return Json(true);
         }
 
         
