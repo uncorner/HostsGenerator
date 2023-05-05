@@ -2,17 +2,32 @@
 @model IEnumerable<HostItem>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Список хостов";
 }
+
+<h2>Список хостов</h2>
 
 <p>
 <a asp-area="" asp-controller="HostItem" asp-action="Create">Добавить новый хост</a>
 </p>
 
-<ul>
-    @foreach (var hostItem in Model)
-    {
-        <li>@hostItem.Url</li>
-    }
-</ul>
+<table class="table table-success">
+    <thead>
+        <tr>
+            <th scope="col">Адрес URL</th>
+            <th scope="col">Название хоста</th>
+            <th scope="col">Активен</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var hostItem in Model)
+        {
+            <tr>
+                <td>@hostItem.Url</td>
+                <td>@hostItem.Name</td>
+                <td>@hostItem.IsEnabled</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
