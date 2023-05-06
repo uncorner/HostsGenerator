@@ -6,29 +6,34 @@
 <h2>@ViewData["Title"]</h2>
 
 <form method="post">
-    <div>
+    <div class="form-inner-box">
         @if (!ViewData.ModelState.IsValid)
         {
             <div asp-validation-summary="All"></div>
         }
-        <p>
-            <label asp-for="Name"></label><br />
-            <input asp-for="Name" />
+        <div class="mb-3">
+            <label class="form-label" asp-for="Name"></label><br />
+            <input class="form-control" asp-for="Name" />
             <span asp-validation-for="Name" />
-        </p>
-        <p>
-            <label asp-for="Url"></label><br />
-            <input asp-for="Url" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Url"></label><br />
+            <input class="form-control" asp-for="Url" />
             <span asp-validation-for="Url" />
-        </p>
-        <p>
-            <label asp-for="IsEnabled"></label><br />
-            <input asp-for="IsEnabled" />
+        </div>
+        <div class="mb-3 form-check">
+            <input class="form-check-input" asp-for="IsEnabled" />
+            <label class="form-check-label" asp-for="IsEnabled"></label><br />
             <span asp-validation-for="IsEnabled" />
-        </p>
-        <p>
-            <input type="submit" value="Добавить" />
-        </p>
+        </div>
+        <div class="form-box-submit row align-items-center">
+            <div class="col-auto">
+                <input class="btn btn-primary" type="submit" value="Добавить" />
+            </div>
+            <div class="col-auto">
+                <a asp-controller="Home" asp-action="Index">Отмена</a>
+            </div>
+        </div>
     </div>
 </form>
 

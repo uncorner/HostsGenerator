@@ -29,6 +29,7 @@ main > .container {
     background-color: darkslateblue;
 }
 
+/* Validation */
 .field-validation-error {
     color: #b94a48;
 }
@@ -43,4 +44,16 @@ input.input-validation-error {
 
 .validation-summary-errors {
     color: #b94a48;
+}
+
+.form-inner-box {
+    width: 40%;
+}
+
+.form-box-submit {
+    margin-top: 4em;
+}
+
+.form-box-submit input {
+    margin-right: 2em;
 }
