@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,8 +22,18 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+SetRoutes(app);
 
 app.Run();
+
+static void SetRoutes(WebApplication app)
+{
+    app.MapControllerRoute(
+        name: "add_host",
+        pattern: "addhost",
+        defaults: new { controller = "HostItem", action = "Create" });
+
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+}
