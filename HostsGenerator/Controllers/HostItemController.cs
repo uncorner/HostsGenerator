@@ -19,7 +19,7 @@ namespace HostsGenerator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var hostItem = new HostItem(form.Url) { Name = form.Name };
+                var hostItem = new HostItem(form.Domain.Trim()) { Name = form.Name?.Trim() };
                 Repository.HostItems.Add(hostItem);
 
                 return RedirectToAction("Index", "Home");
@@ -29,9 +29,11 @@ namespace HostsGenerator.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public IActionResult CheckUrlExists(string url)
+        public IActionResult CheckDomainExists(string domain)
         {
-            if (Repository.HostItems.Select(i => i.Url).Contains(url))
+            domain = domain.Trim();
+
+            if (Repository.HostItems.Select(i => i.Domain).Contains(domain))
             {
                 return Json(false);
             }
