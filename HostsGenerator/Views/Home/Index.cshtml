@@ -25,7 +25,12 @@
             <tr>
                 <td>@hostItem.Domain</td>
                 <td>@hostItem.Name</td>
-                <td>@hostItem.IsEnabled</td>
+                <td>
+                    @if (hostItem.IsEnabled)
+                    {
+                        <img src="/icons/check.svg" alt="Bootstrap" width="32" height="32">
+                    }
+                </td>
             </tr>
         }
     </tbody>

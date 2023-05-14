@@ -19,7 +19,9 @@ namespace HostsGenerator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var hostItem = new HostItem(form.Domain.Trim()) { Name = form.Name?.Trim() };
+                var hostItem = new HostItem(form.Domain.Trim()) {
+                    Name = form.Name?.Trim(), IsEnabled = form.IsEnabled
+                };
                 Repository.HostItems.Add(hostItem);
 
                 return RedirectToAction("Index", "Home");
