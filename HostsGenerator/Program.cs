@@ -1,8 +1,18 @@
 
+using HostsGenerator.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new NullReferenceException("Cannot get connection string");
+
+//builder.Services.AddDbContext
+//services.AddDbContextFactory<PeopleContext>(opt => opt.UseSqlServer($"Data Source={myconnectionstring}"));
+builder.Services.AddDbContextFactory<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

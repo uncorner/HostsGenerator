@@ -6,15 +6,15 @@ namespace HostsGenerator.Presenation.Models
 {
     public class HostItemForm
     {
-        private const string pattern = @"^\s*[0-9a-zA-Z]+\.[a-zA-Z]+\s*$";
+        private const string DomainPattern = @"^\s*[0-9a-zA-Z]+\.[a-zA-Z]+\s*$";
 
-        [Display(Name = "Название")]
+        [Display(Name = "Описание")]
         [StringLength(50, ErrorMessage = "Слишком много символов")]
-        public string? Name { get; set; }
+        public string? Description { get; set; }
 
         [Display(Name = "Домен хоста")]
         [Required(ErrorMessage = "Введите домен хоста")]
-        [RegularExpression(pattern, ErrorMessage = "Неверный формат домена")]
+        [RegularExpression(DomainPattern, ErrorMessage = "Неверный формат домена")]
         [StringLength(255, ErrorMessage = "Слишком много символов")]
         [Remote(nameof(HostItemController.CheckDomainExists),
             "HostItem", ErrorMessage = "Хост с таким доменом уже был добавлен")]

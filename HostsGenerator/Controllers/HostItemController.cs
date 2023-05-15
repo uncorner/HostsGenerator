@@ -2,11 +2,18 @@
 using HostsGenerator.Infrastructure;
 using HostsGenerator.Presenation.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HostsGenerator.Controllers
 {
     public class HostItemController : Controller
     {
+        private readonly IDbContextFactory<ApplicationDbContext> dbContextFactory;
+
+        public HostItemController(IDbContextFactory<ApplicationDbContext> dbContextFactory)
+        {
+            this.dbContextFactory = dbContextFactory;
+        }
         
         public IActionResult Create()
         {
@@ -15,14 +22,21 @@ namespace HostsGenerator.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(HostItemForm form)
+        public async Task<IActionResult> Create(HostItemForm form)
         {
             if (ModelState.IsValid)
             {
                 var hostItem = new HostItem(form.Domain.Trim()) {
-                    Name = form.Name?.Trim(), IsEnabled = form.IsEnabled
+                    Description = form.Description?.Trim(), IsEnabled = form.IsEnabled
                 };
-                Repository.HostItems.Add(hostItem);
+
+                //>>>>>>>>>
+                //Repository.HostItems.Add(hostItem);
+                using(var dbContext = dbContextFactory.CreateDbContext())
+                {
+                    dbContext.HostItems.Add(hostItem);
+                    await dbContext.SaveChangesAsync();
+                }
 
                 return RedirectToAction("Index", "Home");
             }
