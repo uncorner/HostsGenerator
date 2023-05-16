@@ -8,7 +8,6 @@ namespace HostsGenerator.Application.Entities
     {
         public int Id { get; set; }
 
-        // unique
         [MaxLength(50)]
         public string Domain { get; init; }
 

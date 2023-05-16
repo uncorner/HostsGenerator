@@ -14,6 +14,9 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 //services.AddDbContextFactory<PeopleContext>(opt => opt.UseSqlServer($"Data Source={myconnectionstring}"));
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
 
+//>>>>>>>>>>>>>>
+builder.Services.AddCustomServices();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

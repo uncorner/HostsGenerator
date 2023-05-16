@@ -1,4 +1,5 @@
 ﻿using HostsGenerator.Application.Entities;
+using HostsGenerator.Application.Repository;
 using HostsGenerator.Infrastructure;
 using HostsGenerator.Presenation.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,13 @@ namespace HostsGenerator.Controllers
     public class HostItemController : Controller
     {
         private readonly IDbContextFactory<ApplicationDbContext> dbContextFactory;
+        private readonly IRepositoryFactory repositoryFactory;
 
-        public HostItemController(IDbContextFactory<ApplicationDbContext> dbContextFactory)
+        public HostItemController(IDbContextFactory<ApplicationDbContext> dbContextFactory,
+            IRepositoryFactory repositoryFactory)
         {
             this.dbContextFactory = dbContextFactory;
+            this.repositoryFactory = repositoryFactory;
         }
         
         public IActionResult Create()
@@ -49,7 +53,10 @@ namespace HostsGenerator.Controllers
         {
             domain = domain.Trim();
 
-            if (Repository.HostItems.Select(i => i.Domain).Contains(domain))
+            using var dbContext = dbContextFactory.CreateDbContext();
+            var hostItemRepository = repositoryFactory.GetHostItemRepository(dbContext);
+
+            if (hostItemRepository.HasHostItemWithDomain(domain))
             {
                 return Json(false);
             }
