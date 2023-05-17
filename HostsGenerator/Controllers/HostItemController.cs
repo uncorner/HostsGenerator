@@ -1,22 +1,17 @@
 ﻿using HostsGenerator.Application.Entities;
 using HostsGenerator.Application.Repository;
-using HostsGenerator.Infrastructure;
 using HostsGenerator.Presenation.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HostsGenerator.Controllers
 {
     public class HostItemController : Controller
     {
-        private readonly IDbContextFactory<ApplicationDbContext> dbContextFactory;
-        private readonly IRepositoryFactory repositoryFactory;
+        private readonly IUnitOfWorkFactory unitOfWorkFactory;
 
-        public HostItemController(IDbContextFactory<ApplicationDbContext> dbContextFactory,
-            IRepositoryFactory repositoryFactory)
+        public HostItemController(IUnitOfWorkFactory unitOfWorkFactory)
         {
-            this.dbContextFactory = dbContextFactory;
-            this.repositoryFactory = repositoryFactory;
+            this.unitOfWorkFactory = unitOfWorkFactory;
         }
         
         public IActionResult Create()
@@ -34,13 +29,10 @@ namespace HostsGenerator.Controllers
                     Description = form.Description?.Trim(), IsEnabled = form.IsEnabled
                 };
 
-                //>>>>>>>>>
-                //Repository.HostItems.Add(hostItem);
-                using(var dbContext = dbContextFactory.CreateDbContext())
-                {
-                    dbContext.HostItems.Add(hostItem);
-                    await dbContext.SaveChangesAsync();
-                }
+                using var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+                var hostItemRepository = unitOfWork.CreateHostItemRepository();
+                hostItemRepository.Add(hostItem);
+                await unitOfWork.SaveChangesAsync();
 
                 return RedirectToAction("Index", "Home");
             }
@@ -49,14 +41,14 @@ namespace HostsGenerator.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public IActionResult CheckDomainExists(string domain)
+        public async Task<IActionResult> CheckDomainExists(string domain)
         {
             domain = domain.Trim();
 
-            using var dbContext = dbContextFactory.CreateDbContext();
-            var hostItemRepository = repositoryFactory.GetHostItemRepository(dbContext);
+            using var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var hostItemRepository = unitOfWork.CreateHostItemRepository();
 
-            if (hostItemRepository.HasHostItemWithDomain(domain))
+            if (await hostItemRepository.HasHostItemAsync(domain))
             {
                 return Json(false);
             }

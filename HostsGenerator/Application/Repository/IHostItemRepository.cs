@@ -4,9 +4,11 @@ namespace HostsGenerator.Application.Repository
 {
     public interface IHostItemRepository
     {
-        IEnumerable<HostItem> GetAll();
-        
-        bool HasHostItemWithDomain(string domain);
+        Task<IEnumerable<HostItem>> GetAllAsync();
+
+        Task<bool> HasHostItemAsync(string domain);
+
+        void Add(HostItem item);
         
     }
 }

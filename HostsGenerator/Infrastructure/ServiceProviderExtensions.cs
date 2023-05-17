@@ -7,7 +7,7 @@ namespace HostsGenerator.Infrastructure
     {
         public static void AddCustomServices(this IServiceCollection services)
         {
-            services.AddTransient<IRepositoryFactory, RepositoryFactory>();
+            services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
         }
 
     }

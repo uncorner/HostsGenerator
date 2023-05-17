@@ -10,11 +10,7 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("Default")
     ?? throw new NullReferenceException("Cannot get connection string");
 
-//builder.Services.AddDbContext
-//services.AddDbContextFactory<PeopleContext>(opt => opt.UseSqlServer($"Data Source={myconnectionstring}"));
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
-
-//>>>>>>>>>>>>>>
 builder.Services.AddCustomServices();
 
 var app = builder.Build();

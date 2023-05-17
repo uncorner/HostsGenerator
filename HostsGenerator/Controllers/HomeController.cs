@@ -1,32 +1,25 @@
 ﻿using HostsGenerator.Application.Repository;
-using HostsGenerator.Infrastructure;
 using HostsGenerator.Presenation.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace HostsGenerator.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IDbContextFactory<ApplicationDbContext> dbContextFactory;
-        private readonly IRepositoryFactory repositoryFactory;
+        private readonly IUnitOfWorkFactory unitOfWorkFactory;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger,
-            IDbContextFactory<ApplicationDbContext> dbContextFactory,
-            IRepositoryFactory repositoryFactory)
+        public HomeController(IUnitOfWorkFactory unitOfWorkFactory)
         {
-            _logger = logger;
-            this.dbContextFactory = dbContextFactory;
-            this.repositoryFactory = repositoryFactory;
+            this.unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            using var dbContext = dbContextFactory.CreateDbContext();
-            var hostItemRepository = repositoryFactory.GetHostItemRepository(dbContext);
-            var hostItems = hostItemRepository.GetAll();
+            using var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var hostItemRepository = unitOfWork.CreateHostItemRepository();
+            var hostItems = await hostItemRepository.GetAllAsync();
             return View(hostItems);
         }
 

@@ -1,5 +1,6 @@
 ﻿using HostsGenerator.Application.Entities;
 using HostsGenerator.Application.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace HostsGenerator.Infrastructure.Repository
 {
@@ -12,9 +13,15 @@ namespace HostsGenerator.Infrastructure.Repository
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<HostItem> GetAll() => dbContext.HostItems.ToList();
+        public void Add(HostItem item)
+        {
+            dbContext.HostItems.Add(item);
+        }
 
-        public bool HasHostItemWithDomain(string domain) =>
-            dbContext.HostItems.Select(i => i.Domain).Contains(domain);
+        public async Task<IEnumerable<HostItem>> GetAllAsync() =>
+            await dbContext.HostItems.ToListAsync();
+
+        public async Task<bool> HasHostItemAsync(string domain) =>
+             await dbContext.HostItems.Select(i => i.Domain).ContainsAsync(domain);
     }
 }
