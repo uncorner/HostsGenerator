@@ -1,6 +1,8 @@
 
 using HostsGenerator.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
